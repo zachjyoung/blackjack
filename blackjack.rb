@@ -1,8 +1,11 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 
-
 player_hand = []
+dealer_hand = []
+
+player_score = 0
+dealer_score = 0
 
 SUITS = ['♠', '♣', '♥', '♦']
 VALUES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
@@ -18,36 +21,53 @@ def build_deck
   return deck
 end
 
+def next_card(shuffle)
+  shuffle.pop
+end
 
 deck = build_deck
 shuffled_deck = deck.shuffle
  
-#Matching card score with card
-
-demo_hash = {}
+value_hash = {}
 
 card_value = [2,3,4,5,6,7,8,9,10,10,10,10,0,2,3,4,5,6,7,8,9,10,10,10,10,0,2,3,4,5,6,7,8,9,10,10,10,10,0,2,3,4,5,6,7,8,9,10,10,10,10,0]
 
-deck.each_with_index {|k,i|demo_hash[k] = card_value[i]}
-####### End Matching ##########3
+deck.each_with_index {|k,i|value_hash[k] = card_value[i]}
 
+player_hand.push(next_card(shuffled_deck))
+player_hand.push(next_card(shuffled_deck))
 
-2.times do |card|
-  player_hand = shuffled_deck.pop(card)
+dealer_hand.push(next_card(shuffled_deck))
+dealer_hand.push(next_card(shuffled_deck))
+
+puts "Welcome to Blackjack!"
+puts 
+
+puts "Player was dealt #{player_hand[0]}"
+puts "Player was dealt #{player_hand[1]}"
+
+# puts "Player score #{player_score}"
+
+puts "hit or stand (h/s): "
+
+input = gets.chomp
+
+if input == "h"
+  player_hand.push(next_card(shuffled_deck))
+elsif input == "s"
+  # puts "Player score #{player_score}"
+  puts "Dealer was dealt #{dealer_hand[0]}"
+  puts "Dealer was dealt #{dealer_hand[1]}"
+  # puts "Dealer score #{dealer_score}"
 end
 
 
-puts player_hand
-puts demo_hash
-
-next_card = shuffled_deck.pop
-
-puts next_card
-
-puts demo_hash.fetch(next_card)
+  
 
 
+# puts player_hand[0]
 
+# puts player_hand
 
 # As a player
 # I want to be prompted to hit or stand
