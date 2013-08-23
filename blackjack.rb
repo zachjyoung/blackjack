@@ -30,7 +30,7 @@ shuffled_deck = deck.shuffle
  
 value_hash = {}
 
-card_value = [2,3,4,5,6,7,8,9,10,10,10,10,0,2,3,4,5,6,7,8,9,10,10,10,10,0,2,3,4,5,6,7,8,9,10,10,10,10,0,2,3,4,5,6,7,8,9,10,10,10,10,0]
+card_value = [2,3,4,5,6,7,8,9,10,10,10,10,[1,11],2,3,4,5,6,7,8,9,10,10,10,10,[1,11],2,3,4,5,6,7,8,9,10,10,10,10,[1,11],2,3,4,5,6,7,8,9,10,10,10,10,[1,11]]
 
 deck.each_with_index {|k,i|value_hash[k] = card_value[i]}
 
@@ -46,28 +46,35 @@ puts
 puts "Player was dealt #{player_hand[0]}"
 puts "Player was dealt #{player_hand[1]}"
 
-# puts "Player score #{player_score}"
+player_score = value_hash[player_hand[0]] + value_hash[player_hand[1]]
+
+puts "Player score #{player_score}"
 
 puts "hit or stand (h/s): "
 
 input = gets.chomp
 
-if input == "h"
+
+while input == "h" && player_score <= 21
   player_hand.push(next_card(shuffled_deck))
-elsif input == "s"
+  puts "Player was dealt #{player_hand[2]}"
+  player_score = player_score + value_hash[player_hand[2]]
+  puts "Player score #{player_score}"
+  puts "hit or stand (h/s): "
+  input = gets.chomp
+ if input == "s"
   # puts "Player score #{player_score}"
   puts "Dealer was dealt #{dealer_hand[0]}"
   puts "Dealer was dealt #{dealer_hand[1]}"
-  # puts "Dealer score #{dealer_score}"
+  dealer_score = value_hash[dealer_hand[0]] + value_hash[dealer_hand[1]]
+  puts "Dealer score #{dealer_score}"
+  break
+end
 end
 
 
-  
 
 
-# puts player_hand[0]
-
-# puts player_hand
 
 # As a player
 # I want to be prompted to hit or stand
